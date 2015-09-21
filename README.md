@@ -46,7 +46,7 @@ var DialogViewModel = Backbone.ViewModel.extend({
 Remember that a ViewModel is simply a Backbone.Model by itself that extends specific behaviors to handle the state-machine, sync and decorators patterns. All that you know about Backbone.Models applies to Backbone.ViewModel.
 
 
-## Instanciate
+### Instanciate
 
 When you need a view model, you probably need it handles a data Model for your View (and not only stores your View state). In this case, simply pass a `model` attribute that points to your data Model when creating a new ViewModel, then use the `ViewModel` as, well… the View's model:
 
@@ -63,12 +63,12 @@ var dialogView = new DialogView({model: viewModel});
 Then access the ViewModel like you do with classic Backbone models.
 
 
-## State-machine
+### State-machine
 
 The state are simple model properties that can be set as you want, and on which changes the associated view can react. Simply use the `ViewModel.set` method like with your Backbone models.
 
 
-## Decorators
+### Decorators
 
 When you want to decorate some data properties, you can use the `map` attribute to declares the properties you want to _map_ to the underlying data model. It relies on 3 parts:
 
@@ -120,7 +120,7 @@ var DialogViewModel = Backbone.ViewModel.extend({
 The `getMapped` et `saveMapped` acts as getters/setters for the mapped attributes and their underlying values. The ViewModel also subscribe them to the model changes, so each times a underlying model concerned property changes, the mapped attributes that depends on it are updated.
 
 
-## Sync
+### Sync
 
 The ViewModel can handle a temporary unsynced state: when you set a data property through the ViewModel, it isn't immediately transfered to the underlying model. Instead, the ViewModel staores this temporary changes and wait for later save action to resync with the model.
 
@@ -129,12 +129,12 @@ This way, you can trash the changes at any time by calling the `ViewModel.reset`
 It's particularly useful when dealing with forms where you want you User's input saved (in the view-state) but not synced (to the server) unless the user finally submit the form.
 
 
-## Persistence
+### Persistence
 
 By default, the `sync` Backbone.Model method is disabled on the ViewModel, as long as you'll probably doesn't want to sync your view's state. If you need, or want, to persist your view state (e.g. to restore a form user's inputs if the page accidentally reload, and then preserves its progression), then feel free to implement your own ViewModel persistence way by overriding the `Backbone.ViewModel.sync` method (e.g. by syncing its properties state locally in localStorage or IndexedDB).
 
 
-## React to View Events
+### React to View Events
 
 In our MVVM approch, view does nothing but passing event when user interacts on it. It means that your view shouldn't embed any logic, but instead delegates it to another instance, like the ViewModel.
 
@@ -158,7 +158,7 @@ var DialogView = Backbone.View.extend({
 _NOTE_: we're currently looking for a good way to automate this, but it'll probably need to hack the Backbone.View construction itself.
 
 
-# Todo and Ideas
+## Todo and Ideas
 
 - Automatically bind `viewEvents` in model to its view events when the view is constructed with this ViewModel
 - Support a `conflict<:property>` event that can be triggered when the underlying model is updated, but the ViewModel contains changes applied to this properties that aren't already synced. It may triggers an events containing each 3 values (old-model-value, new-model-value, view-model-value), and let the user decides what to do but apply a default action.
