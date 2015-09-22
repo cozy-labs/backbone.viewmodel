@@ -59,7 +59,23 @@ do (factory = (root, Backbone) ->
             @compositeCollection = options?.compositeCollection or null
             mappedAttrs          = @_buildMappedAttributes()
             super _.extend({}, attributes, mappedAttrs), options
+
             @listenTo @model, 'all', (args...) -> @trigger.apply @, args
+            @bindEntityEvents()
+
+
+        # Simple and convenient wrapper inspired by Marionette to bind `events`
+        # property to the ViewModel itself, making the ViewModel listening to
+        # its events and react to them.
+        bindEntityEvents: ->
+            events = _.result @, 'events', {}
+            for event, methods of events
+                if _.isFunction methods
+                    @listenTo @, event, methods
+                else
+                    methodNames = methods.split /\s+/
+                    for method in methodNames
+                        @listenTo @, event, @[method] if @[method]
 
 
         # Disable syncing.
