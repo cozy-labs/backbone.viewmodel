@@ -84,11 +84,14 @@ do (factory = (root, Backbone) ->
         sync: ->
 
 
-        # Reset the current state-machine properties by resyncing the unerlying
+        # Reset the current state-machine properties by resyncing the underlying
         # model on it, and removing empty state properties.
         reset: ->
-            @unset attr for attr, value of @model?.attributes when @has attr
-            @unset attr for attr, value of @attributes when value is ''
+            defaults = _.result @, 'defaults', {}
+            map      = _.result @, 'map', {}
+
+            ownAttrs = _.union _.keys(defaults), _.keys(map)
+            @unset attr for attr of @attributes when attr not in ownAttrs
             @trigger 'reset'
 
 
