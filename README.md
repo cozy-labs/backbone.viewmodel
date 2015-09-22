@@ -19,6 +19,8 @@ Among all available patterns exists the Model-View-ViewModel pattern (see a [cle
 
 In MVVM philosophy, like in Model-View-Presenter pattern, the View should not do anything by itself. It must only consumes the data offered to it, and send-back events when something (i.e. User interaction) occurs. React to this events isn't View responsibility. So your View should be completely agnostic: it consumes data, render itself partially or completely when changes occurs, and send-back events to notify when something happens on it. That's all. Note that the View doesn't stores its state: it only renders when some of its state's properties change.
 
+So why adding an additional layer of code? Because of code strength and tests! If you View doesn't do anything by itself but rendering, then you can freely replace it by another implementation when you need without rewriting logics. In same manner, you'll want probably test intensively the ViewModel, to be sure it stays consistent when changes occurs (in underlying model or when view's events are catched) but you can be more laxist on Ui tests, because your View is probably just a DOM representation of your state-machine at a given time.
+
 
 ## Install
 
