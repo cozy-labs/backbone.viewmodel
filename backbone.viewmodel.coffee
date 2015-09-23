@@ -200,7 +200,7 @@ do (factory = (root, Backbone) ->
         # Return a state-machine attribute if available or fallback to the
         # underlying model directly.
         get: (attr) ->
-            if @attributes[attr]? then @attributes[attr] else @model.get attr
+            if @attributes[attr]? then @attributes[attr] else @model?.get attr
 
 
         # When setting a property, extends the property itself with the given
